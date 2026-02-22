@@ -3,9 +3,6 @@
 import type { UIMessage } from 'ai';
 import { User, Bot } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import 'katex/dist/katex.min.css';
 
 const MarkdownPreview = dynamic(
   () => import('@uiw/react-markdown-preview').then((mod) => mod.default),
@@ -48,8 +45,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           <div className="prose prose-sm dark:prose-invert max-w-none [&_p]:mb-2 [&_p:last-child]:mb-0 [&_pre]:bg-zinc-900 [&_pre]:p-3 [&_pre]:rounded-lg [&_code]:text-xs">
             <MarkdownPreview 
               source={text}
-              remarkPlugins={[remarkMath]}
-              rehypePlugins={[rehypeKatex]}
               wrapperElement={{ "data-color-mode": "dark" }}
               style={{ 
                 backgroundColor: 'transparent',

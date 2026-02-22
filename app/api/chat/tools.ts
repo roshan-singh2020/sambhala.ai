@@ -31,10 +31,11 @@ function interpretWeatherCode(code: number): string {
 
 export const weatherTool = tool({
   description: 'Get the current real-time weather for a given city using Open-Meteo (free, no API key required)',
-  parameters: z.object({
+  inputSchema: z.object({
     city: z.string().describe('The city to get weather for'),
   }),
-  execute: async ({ city }) => {
+  execute: async (input: { city: string }) => {
+    const { city } = input;
     // Step 1: Geocode the city
     const location = await geocodeCity(city);
     if (!location) {
@@ -68,10 +69,11 @@ export const weatherTool = tool({
 
 export const timeTool = tool({
   description: 'Get the current real-time date and time for any city or timezone in the world',
-  parameters: z.object({
+  inputSchema: z.object({
     city: z.string().describe('The city or timezone to get the current time for (e.g. "Kathmandu", "New York", "London")'),
   }),
-  execute: async ({ city }) => {
+  execute: async (input: { city: string }) => {
+    const { city } = input;
     // Use geocoding to get the timezone for the city
     const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
     const geoRes = await fetch(geoUrl);
